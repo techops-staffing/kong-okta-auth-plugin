@@ -34,7 +34,7 @@ describe("Okta Auth", function()
   end)
 
   describe("request", function()
-    it("returns unauthorized if there is no authorization header", function ()
+    it("returns Unauthorized if there is no authorization header", function ()
       local response = assert(client:send {
         method = "GET",
         path = "/api",
@@ -43,6 +43,30 @@ describe("Okta Auth", function()
       })
 
       assert.response(response).has.status(401)
+    end)
+
+    it("returns Unauthorized if token format is invalid", function ()
+      local response = assert(client:send {
+        method = "GET",
+        path = "/api",
+        headers = {
+          authorization = 'invalid'
+        }
+      })
+
+      assert.response(response).has.status(401)
+    end)
+
+    it("returns OK if token format is valid", function ()
+      local response = assert(client:send {
+        method = "GET",
+        path = "/api",
+        headers = {
+          authorization = "Bearer token"
+        }
+      })
+
+      assert.response(response).has.status(200)
     end)
   end)
 end)
