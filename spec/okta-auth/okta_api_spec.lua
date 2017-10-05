@@ -9,7 +9,7 @@ describe("Okta API", function()
     local status, response = okta_api.introspect(
       "server", "api_version", "client_id", "client_secret", "token"
     )
-    
+
     assert.are.equal(status, 200)
 
     https.request:revert()
