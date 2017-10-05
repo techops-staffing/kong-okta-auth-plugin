@@ -8,8 +8,7 @@ local function extract_token(request)
 end
 
 function _M.execute(request, conf)
-  token = extract_token(request)
-  return token
+  return extract_token(request)
 end
 
 return _M
