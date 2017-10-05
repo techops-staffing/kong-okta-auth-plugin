@@ -8,7 +8,13 @@ local function extract_token(request)
 end
 
 function _M.execute(request, conf)
-  return extract_token(request)
+  token = extract_token(request)
+  if not token then return nil end
+
+  return true
+  --TODO: validate token
+  --TODO: extract token data
+  --TODO: return valid, token_data
 end
 
 return _M
