@@ -12,6 +12,10 @@ return {
     authorization_server = {
       type = "string",
       required = true
+    },
+    api_version = {
+      type = "string",
+      required = true
     }
   }
 }
