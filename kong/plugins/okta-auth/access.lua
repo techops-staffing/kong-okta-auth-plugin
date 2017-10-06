@@ -1,4 +1,5 @@
 local okta_api = require "kong.plugins.okta-auth.okta_api"
+local json = require "cjson"
 
 local _M = {}
 
@@ -7,6 +8,11 @@ local function extract_token(request)
   if not authorization then return nil end
 
   return string.match(authorization, '[Bb]earer ([^\n]+)')
+end
+
+local function extract_data(response)
+  --TODO: extract just relevant data
+  return json.decode(response[1])
 end
 
 function _M.execute(request, conf)
@@ -21,9 +27,9 @@ function _M.execute(request, conf)
     token
   )
 
-  return true, response
-  --TODO: extract token data
-  --TODO: return valid, token_data
+  response_data =  extract_data(response)
+
+  return true, response_data
 end
 
 return _M

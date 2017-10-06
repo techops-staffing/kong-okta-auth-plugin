@@ -21,11 +21,19 @@ describe("Access", function()
 
   it("return true and introspect response if token it is valid", function()
     request = {
-      get_headers = function(param) return { ["authorization"] = "Bearer token" } end
+      get_headers = function(param)
+        return { ["authorization"] = "Bearer token" }
+      end
     }
 
     introspect_response = {
       [1] = '{ "active": true, "scope": "read write", "username": "user" }'
+    }
+
+    introspect_data = {
+      ["active"] = true,
+      ["scope"] = "read write",
+      ["username"] = "user"
     }
 
     stub(okta_api, "introspect").returns(200, introspect_response)
@@ -33,7 +41,7 @@ describe("Access", function()
     valid, token_data = access.execute(request, {})
 
     assert.is_true(valid)
-    assert.are.equal(introspect_response, token_data)
+    assert.are.same(introspect_data, token_data)
 
     okta_api.introspect:revert()
   end)
