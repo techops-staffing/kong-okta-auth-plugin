@@ -27,8 +27,9 @@ function _M.execute(request, conf)
     token
   )
 
-  response_data =  extract_data(response)
+  if status_code ~= 200 then return false end
 
+  response_data = extract_data(response)
   return true, response_data
 end
 

@@ -3,7 +3,7 @@ local access = require "kong.plugins.okta-auth.access"
 local okta_api = require "kong.plugins.okta-auth.okta_api"
 
 describe("Access", function()
-  it("return null if token is missing", function()
+  it("return false if token is missing", function()
     request = {
       get_headers = function(param) return {} end
     }
@@ -11,7 +11,7 @@ describe("Access", function()
     assert.is.not_true(valid)
   end)
 
-  it("return null if token in a wrong format", function()
+  it("return false if token in a wrong format", function()
     request = {
       get_headers = function(param) return { ["authorization"] = "token" } end
     }
@@ -19,7 +19,7 @@ describe("Access", function()
     assert.is.not_true(valid)
   end)
 
-  it("return true and introspect response if token it is valid", function()
+  it("return true and introspect response if token is valid", function()
     request = {
       get_headers = function(param)
         return { ["authorization"] = "Bearer token" }
