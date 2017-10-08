@@ -3,19 +3,20 @@ return {
   fields = {
     client_id = {
       type = "string",
-      required = true
+      required = true,
     },
     client_secret = {
       type = "string",
-      required = true
+      required = true,
     },
     authorization_server = {
       type = "string",
-      required = true
+      required = true,
     },
     api_version = {
       type = "string",
-      required = true
+      default = "v1",
+      required = false,
     }
   }
 }
