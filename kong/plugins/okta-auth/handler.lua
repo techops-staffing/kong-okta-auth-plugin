@@ -15,6 +15,10 @@ function OktaAuth:access(conf)
 
   authorized, token_data = access.execute(ngx.req, conf)
   if not authorized then return responses.send_HTTP_UNAUTHORIZED() end
+
+  for key, value in pairs(token_data) do
+    ngx.req_set_header("OKTA-"..key, value)
+  end
 end
 
 return OktaAuth

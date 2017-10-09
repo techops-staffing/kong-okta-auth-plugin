@@ -18,7 +18,7 @@ local function extract_data(token_data)
   local extracted_data = {}
   local required_data = {"username", "group", "scope"}
 
-  for _, field in ipairs(required_data) do
+  for _, field in pairs(required_data) do
     if token_data[field] then extracted_data[field] = token_data[field] end
   end
 
