@@ -10,16 +10,20 @@ local function extract_token(request)
   return string.match(authorization, '[Bb]earer ([^\n]+)')
 end
 
-local function extract_data(response)
+local function is_token_valid(token_data)
+  return token_data['active']
+end
+
+local function extract_data(token_data)
   --TODO: extract just relevant data
-  return json.decode(response[1])
+  return token_data
 end
 
 function _M.execute(request, conf)
   token = extract_token(request)
   if not token then return nil end
 
-  status_code, response = okta_api.introspect(
+  response = okta_api.introspect(
     conf.authorization_server,
     conf.api_version,
     conf.client_id,
@@ -27,10 +31,15 @@ function _M.execute(request, conf)
     token
   )
 
-  if status_code ~= 200 then return false end
+  if not response then return false end
 
-  response_data = extract_data(response)
-  return true, response_data
+  token_data = json.decode(response)
+  if is_token_valid(token_data) then
+    response_data = extract_data(token_data)
+    return true, response_data
+  end
+
+  return false -- token invalid
 end
 
 return _M

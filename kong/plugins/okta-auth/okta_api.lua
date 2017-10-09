@@ -36,7 +36,7 @@ function _M.introspect(auth_server, api_version, client_id, client_secret, token
   if status_code ~= 200 or not response_body then
     return nil
   end
-  
+
   return response_body[1] or response_body
 end
 
