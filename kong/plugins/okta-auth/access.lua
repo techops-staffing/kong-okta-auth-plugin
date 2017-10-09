@@ -15,12 +15,18 @@ local function is_token_valid(token_data)
 end
 
 local function extract_data(token_data)
-  --TODO: extract just relevant data
-  return token_data
+  local extracted_data = {}
+  local required_data = {"username", "group", "scope"}
+
+  for _, field in ipairs(required_data) do
+    if token_data[field] then extracted_data[field] = token_data[field] end
+  end
+
+  return extracted_data
 end
 
 function _M.execute(request, conf)
-  token = extract_token(request)
+  local token = extract_token(request)
   if not token then return nil end
 
   response = okta_api.introspect(
@@ -33,13 +39,8 @@ function _M.execute(request, conf)
 
   if not response then return false end
 
-  token_data = json.decode(response)
-  if is_token_valid(token_data) then
-    response_data = extract_data(token_data)
-    return true, response_data
-  end
-
-  return false -- token invalid
+  local token_data = json.decode(response)
+  return is_token_valid(token_data), extract_data(token_data)
 end
 
 return _M

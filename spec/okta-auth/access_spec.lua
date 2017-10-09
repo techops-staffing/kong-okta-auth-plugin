@@ -53,11 +53,18 @@ describe("Access", function()
     end)
 
     it("return true and introspect response if token is valid", function()
-      introspect_response = '{ "active": true, "scope": "read write", "username": "user" }'
+      introspect_response = [[{
+        "active": true,
+        "scope": "read write",
+        "username": "user",
+        "group": ["Everyone"],
+        "exp": 1507397726
+      }]]
+
       expected_token_data = {
-        ["active"] = true,
         ["scope"] = "read write",
-        ["username"] = "user"
+        ["username"] = "user",
+        ["group"] = {"Everyone"}
       }
 
       stub(okta_api, "introspect").returns(introspect_response)
@@ -65,7 +72,7 @@ describe("Access", function()
       valid, token_data = access.execute(request, {})
 
       assert.is_true(valid)
-      assert.are.same(token_data, expected_token_data)
+      assert.are.same(expected_token_data, token_data)
 
       okta_api.introspect:revert()
     end)
