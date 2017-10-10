@@ -2,6 +2,7 @@ local helpers = require "spec.helpers"
 local access = require "kong.plugins.okta-auth.access"
 local handler = require "kong.plugins.okta-auth.handler"
 local responses = require "kong.tools.responses"
+local request = ngx.req
 
 describe("Handler", function()
   it("Check if headers were included if token is valid", function()
@@ -11,16 +12,16 @@ describe("Handler", function()
       ["group"] = {"Everyone"}
     }
     stub(access, "execute").returns(true, token_data)
-    stub(ngx, "req_set_header")
+    stub(request, "set_header")
 
     handler.access({})
 
     for key, value in pairs(token_data) do
-      assert.stub(ngx.req_set_header).was_called_with("OKTA-"..key, value)
+      assert.stub(request.set_header).was_called_with("OKTA-"..key, value)
     end
 
     access.execute:revert()
-    ngx.req_set_header:revert()
+    request.set_header:revert()
   end)
 
   it("Check if response is unauthorized if token is invalid", function()
