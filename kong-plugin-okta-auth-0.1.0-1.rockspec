@@ -2,14 +2,12 @@ package = "kong-plugin-okta-auth"
 
 version = "0.1.0-1"
 
-supported_platforms = {"linux", "macosx"}
-
 source = {
   url = "git://github.com/techops-staffing/kong-okta-auth-plugin",
 }
 
 description = {
-  summary = "Kong plugin to handle Okta generated token introspection",
+  summary = "Kong Plugin to validate OAuth 2.0 access tokens against an OKTA Authorization Server",
 }
 
 dependencies = {
