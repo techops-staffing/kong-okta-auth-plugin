@@ -10,6 +10,7 @@ before_install:
   - source env/bin/activate
   - luarocks install kong
   - luarocks install busted
+  - luarocks install lua-cjson
 
 install:
   - luarocks make
