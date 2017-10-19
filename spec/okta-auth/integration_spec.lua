@@ -1,4 +1,4 @@
-local helpers = require "spec.helpers"
+local helpers = require "kong.spec.helpers"
 local cjson = require "cjson"
 
 describe("Okta Auth", function()
