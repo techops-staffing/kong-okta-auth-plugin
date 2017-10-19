@@ -9,6 +9,7 @@ before_install:
   - hererocks env --$LUA -rlatest
   - source env/bin/activate
   - luarocks install busted
+  - luarocks install luasec
 
 install:
   - luarocks make
