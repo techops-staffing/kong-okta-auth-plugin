@@ -10,6 +10,7 @@ before_install:
   - source env/bin/activate
   - luarocks install busted
   - luarocks install luasec
+  - luarocks install lua-cjson
 
 install:
   - luarocks make
