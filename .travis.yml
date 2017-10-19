@@ -8,6 +8,7 @@ before_install:
   - pip install hererocks
   - hererocks env --$LUA -rlatest
   - source env/bin/activate
+  - luarocks install kong 
   - luarocks install busted
   - luarocks install luasec
   - luarocks install lua-cjson
