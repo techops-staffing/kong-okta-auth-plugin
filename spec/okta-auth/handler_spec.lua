@@ -1,7 +1,7 @@
 local access = require "kong.plugins.okta-auth.access"
 local handler = require "kong.plugins.okta-auth.handler"
 local responses = require "kong.tools.responses"
-local request = ngx.req
+local request = {}
 
 describe("Handler", function()
   it("Check if headers were included if token is valid", function()
