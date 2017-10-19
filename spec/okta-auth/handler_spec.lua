@@ -2,6 +2,10 @@ local access = require "kong.plugins.okta-auth.access"
 local handler = require "kong.plugins.okta-auth.handler"
 local responses = require "kong.tools.responses"
 local request = {}
+local ngx = {
+  req = {}
+}
+_G.ngx = req
 
 describe("Handler", function()
   it("Check if headers were included if token is valid", function()
@@ -10,6 +14,7 @@ describe("Handler", function()
       ["username"] = "user",
       ["group"] = {"Everyone"}
     }
+
     stub(access, "execute").returns(true, token_data)
     stub(request, "set_header")
 
