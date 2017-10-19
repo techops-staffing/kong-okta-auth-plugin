@@ -5,7 +5,7 @@ local request = {}
 local ngx = {
   req = {}
 }
-_G.ngx = req
+_G.ngx = ngx
 
 describe("Handler", function()
   it("Check if headers were included if token is valid", function()
