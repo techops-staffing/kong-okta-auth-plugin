@@ -1,4 +1,4 @@
-local helpers = require "kong.spec.helpers"
+local helpers = require "spec.helpers"
 local access = require "kong.plugins.okta-auth.access"
 local okta_api = require "kong.plugins.okta-auth.okta_api"
 

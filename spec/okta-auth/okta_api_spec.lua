@@ -1,4 +1,4 @@
-local helpers = require "kong.spec.helpers"
+local helpers = require "spec.helpers"
 local okta_api = require "kong.plugins.okta-auth.okta_api"
 local https = require "ssl.https"
 
