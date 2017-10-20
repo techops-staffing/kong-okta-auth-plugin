@@ -48,7 +48,8 @@ curl -X POST http://localhost:8001/apis/example-api/plugins \
   --data "config.authorization_server=https://okta.com/oauth2/auth-server-id" \
   --data "config.client_id=cid" \
   --data "config.client_secret=secret" \
-  --data "config.api_version=v1"
+  --data "config.api_version=v1" \
+  --data "config.check_auth_server=true"
 ```
 
 Parameters description:
@@ -60,5 +61,6 @@ form parameter|required|description
 `client_id` | *required*| Okta's public identifier for the client
 `client_secret` | *required* | Okta's client secret
 `api_version` | *optional* | Okta's authorization server API version (default: `v1`)
+`check_auth_server` | *optional* | If *true* check authorization server availability (default: `true`)
 
 

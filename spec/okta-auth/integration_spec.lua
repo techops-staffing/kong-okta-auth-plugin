@@ -11,9 +11,9 @@ describe("Okta Auth", function()
     helpers.run_migrations()
 
     api = assert(helpers.dao.apis:insert {
-        name = "api",
-        uris = { "/api" },
-        upstream_url = helpers.mock_upstream_url,
+      name = "api",
+      uris = { "/api" },
+      upstream_url = helpers.mock_upstream_url,
     })
 
     plugin = assert(helpers.dao.plugins:insert {
@@ -23,6 +23,7 @@ describe("Okta Auth", function()
         client_id = "test_client_id",
         client_secret = "test_client_secret",
         authorization_server = "test_auth_server",
+        check_auth_server = false,
       }
     })
 
