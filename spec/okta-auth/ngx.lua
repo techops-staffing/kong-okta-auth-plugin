@@ -1,6 +1,4 @@
--- test fixtures. we have to load them before requiring the
--- ALF serializer, since it caches those functions at the
--- module chunk level.
+-- test fixtures
 return {
   encode_base64 = function(str)
     return string.format("base64_%s", str)
@@ -38,8 +36,6 @@ return {
     end
   },
 
-  -- ALF buffer stubs
-  -- TODO: to be removed once we use resty-cli to run our tests.
   now = function()
     return os.time() * 1000  -- adding ngx.time()'s ms resolution
   end,
