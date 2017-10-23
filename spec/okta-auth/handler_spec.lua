@@ -6,7 +6,7 @@ local responses = require "kong.tools.responses"
 local request = ngx.req
 
 describe("Handler", function()
-  it("Check if headers were deleted", function()
+  it("Check if all OKTA-* headers from original request were striped", function()
     stub(access, "execute").returns(true, {})
     stub(request, "set_header")
 
@@ -15,6 +15,18 @@ describe("Handler", function()
     assert.stub(request.set_header).was_called_with("OKTA-group", nil)
     assert.stub(request.set_header).was_called_with("OKTA-test", nil)
     assert.stub(request.set_header).was_not_called_with("test", nil)
+
+    access.execute:revert()
+    request.set_header:revert()
+  end)
+
+  it("Check if token header was deleted before redirecting to API", function()
+    stub(access, "execute").returns(true, {})
+    stub(request, "set_header")
+
+    handler.access({})
+
+    assert.stub(request.set_header).was_called_with("Authorization", nil)
 
     access.execute:revert()
     request.set_header:revert()

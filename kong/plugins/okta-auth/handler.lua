@@ -3,10 +3,6 @@ local access = require "kong.plugins.okta-auth.access"
 local responses = require "kong.tools.responses"
 local request = ngx.req
 
-local OktaAuth = BasePlugin:extend()
-
-OktaAuth.PRIORITY = 1000
-
 local function add_okta_headers(token_data)
   for key, value in pairs(token_data) do
     request.set_header("OKTA-"..key, value)
@@ -26,6 +22,9 @@ local function strip_okta_headers()
   end
 end
 
+local OktaAuth = BasePlugin:extend()
+OktaAuth.PRIORITY = 1000
+
 function OktaAuth:new()
   OktaAuth.super.new(self, "okta-auth")
 end
@@ -37,6 +36,7 @@ function OktaAuth:access(conf)
   if not authorized then return responses.send_HTTP_UNAUTHORIZED() end
 
   strip_okta_headers()
+  request.set_header("Authorization", nil)
   add_okta_headers(token_data)
 end
 
