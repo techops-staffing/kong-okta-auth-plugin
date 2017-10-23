@@ -6,6 +6,20 @@ local responses = require "kong.tools.responses"
 local request = ngx.req
 
 describe("Handler", function()
+  it("Check if headers were deleted", function()
+    stub(access, "execute").returns(true, {})
+    stub(request, "set_header")
+
+    handler.access({})
+
+    assert.stub(request.set_header).was_called_with("OKTA-group", nil)
+    assert.stub(request.set_header).was_called_with("OKTA-test", nil)
+    assert.stub(request.set_header).was_not_called_with("test", nil)
+
+    access.execute:revert()
+    request.set_header:revert()
+  end)
+
   it("Check if headers were included if token is valid", function()
     token_data = {
       ["scope"] = "read write",
