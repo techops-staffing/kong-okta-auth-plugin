@@ -7,7 +7,9 @@ local function extract_token(request)
   local authorization = request.get_headers()["authorization"]
   if not authorization then return nil end
 
-  return string.match(authorization, '[Bb]earer ([^\n]+)')
+  return string.match(authorization,
+    '^[Bb]earer ([A-Za-z0-9-_]+%.[A-Za-z0-9-_]+%.[A-Za-z0-9-_]+)$'
+  )
 end
 
 local function is_token_valid(token_data)

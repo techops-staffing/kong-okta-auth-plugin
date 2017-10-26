@@ -11,20 +11,42 @@ describe("Access", function()
       assert.is.not_true(valid)
     end)
 
-    it("return false if token in a wrong format", function()
+    it("return false if token type is not bearer or Bearer", function()
       request = {
-        get_headers = function(param) return { ["authorization"] = "token" } end
+        get_headers = function(param)
+          return { ["authorization"] = "token" }
+        end
+      }
+      valid, token_data = access.execute(request, {})
+      assert.is.not_true(valid)
+    end)
+
+    it("return false if token has not tree parts separated by period", function()
+      request = {
+        get_headers = function(param)
+          return { ["authorization"] = "Bearer part1.part2" }
+        end
+      }
+      valid, token_data = access.execute(request, {})
+      assert.is.not_true(valid)
+    end)
+
+    it("return false if token has invalid characters", function()
+      request = {
+        get_headers = function(param)
+          return { ["authorization"] = "Bearer pa*rt1.part2.part3" }
+        end
       }
       valid, token_data = access.execute(request, {})
       assert.is.not_true(valid)
     end)
   end)
 
-  describe("Token introspection", function()
+  describe("Introspection of a valid token", function()
     before_each(function()
       request = {
         get_headers = function(param)
-          return { ["authorization"] = "Bearer token" }
+          return { ["authorization"] = "Bearer header.body.signature" }
         end
       }
     end)
