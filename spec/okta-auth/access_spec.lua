@@ -21,7 +21,7 @@ describe("Access", function()
       assert.is.not_true(valid)
     end)
 
-    it("return false if token has not tree parts separated by period", function()
+    it("return false if token has not three parts separated by period", function()
       request = {
         get_headers = function(param)
           return { ["authorization"] = "Bearer part1.part2" }
