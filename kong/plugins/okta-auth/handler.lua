@@ -36,7 +36,7 @@ function OktaAuth:access(conf)
   if not authorized then return responses.send_HTTP_UNAUTHORIZED() end
 
   strip_okta_headers()
-  request.set_header("Authorization", nil)
+  request.set_header("authorization", nil)
   add_okta_headers(token_data)
 end
 

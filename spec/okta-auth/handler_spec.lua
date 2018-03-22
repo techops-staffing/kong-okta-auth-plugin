@@ -26,7 +26,7 @@ describe("Handler", function()
 
     handler.access({})
 
-    assert.stub(request.set_header).was_called_with("Authorization", nil)
+    assert.stub(request.set_header).was_called_with("authorization", nil)
 
     access.execute:revert()
     request.set_header:revert()
