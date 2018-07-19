@@ -13,10 +13,11 @@ before_install:
   - luarocks install lua-cjson
 
 install:
-  - luarocks make
+  - make
 
 script:
-  - busted spec/okta-auth/access_spec.lua spec/okta-auth/handler_spec.lua spec/okta-auth/okta_api_spec.lua --verbose
+  - LUA_PATH=$LUA_PATH;spec/fixtures/?.lua
+  - busted spec/unit/access_spec.lua spec/unit/handler_spec.lua spec/unit/okta_api_spec.lua --verbose
 
 notifications:
   email:
