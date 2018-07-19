@@ -3,6 +3,7 @@ sudo: false
 
 env:
   - LUA="lua=5.1"
+  - LUA_PATH=$LUA_PATH;spec/fixtures/?.lua
 
 before_install:
   - pip install hererocks
@@ -16,7 +17,6 @@ install:
   - make
 
 script:
-  - export LUA_PATH=$LUA_PATH;spec/fixtures/?.lua
   - busted spec/unit/access_spec.lua spec/unit/handler_spec.lua spec/unit/okta_api_spec.lua --verbose
 
 notifications:
