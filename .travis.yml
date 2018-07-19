@@ -16,7 +16,8 @@ install:
   - make
 
 script:
-  - LUA_PATH=$LUA_PATH;spec/fixtures/?.lua busted spec/unit/access_spec.lua spec/unit/handler_spec.lua spec/unit/okta_api_spec.lua --verbose
+  - export LUA_PATH=$LUA_PATH;spec/fixtures/?.lua
+  - busted spec/unit/access_spec.lua spec/unit/handler_spec.lua spec/unit/okta_api_spec.lua --verbose
 
 notifications:
   email:
