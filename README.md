@@ -84,10 +84,15 @@ luarocks install lua-cjson
 luarocks install luasec OPENSSL_DIR=/usr/local/opt/openssl (you may need to run `brew install openssl` and `brew link --force openssl` on MacOS)
 ```
 
-You also will need to clone [Kong](https://github.com/Kong/kong) and set the value of `KONG_PATH`. 
+You also will need to clone [Kong](https://github.com/Kong/kong) and set the value of `KONG_PATH`.
 
 Running tests
 ```
 make test
 ```
 
+### Using Docker
+```
+docker-compose build lua
+docker-compose run lua make test
+```
