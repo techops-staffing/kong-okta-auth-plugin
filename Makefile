@@ -1,6 +1,6 @@
 BUSTED_ARGS ?= -v
 TEST_CMD ?= busted $(BUSTED_ARGS)
-KONG_PATH ?=./env/kong
+KONG_PATH ?=./kong
 PLUGIN_NAME := kong-plugin-okta-auth
 
 .PHONY: install uninstall dev test test-integration test-plugins test-all clean
