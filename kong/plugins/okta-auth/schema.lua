@@ -18,7 +18,7 @@ return {
     api_version = {
       type = "string",
       default = "v1",
-      required = false,
+      required = true,
     },
     check_auth_server = {
       type = "boolean",
