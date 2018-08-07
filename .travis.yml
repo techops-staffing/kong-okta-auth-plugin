@@ -13,6 +13,7 @@ before_install:
   - luarocks install busted
   - luarocks install lua-cjson
   - luarocks install lbase64
+  - luarocks install luacrypto
 
 install:
   - make
