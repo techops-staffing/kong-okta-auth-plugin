@@ -11,7 +11,9 @@ description = {
 }
 
 dependencies = {
-  "lua ~> 5.1"
+  "lua ~> 5.1",
+  "lbase64",
+  "lua-cjson"
 }
 
 local pluginName = "okta-auth"
