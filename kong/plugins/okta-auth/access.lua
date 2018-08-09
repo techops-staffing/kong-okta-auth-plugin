@@ -32,7 +32,7 @@ function _M.execute(request, conf)
   local token = extract_token(request)
   if not token then return nil end
 
-  jwks_url = "https://" .. conf.authorization_server .. ".oktapreview.com/oauth2/" .. conf.client_id .. "/" .. conf.api_version .. "/keys"
+  jwks_url = conf.authorization_server .. "/" .. conf.api_version .. "/keys"
   token_data, err = jwt.validate_with_jwks(token, jwks_url)
 
   if err then return nil end
