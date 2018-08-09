@@ -31,6 +31,7 @@ end
 function _M.execute(request, conf)
   local token = extract_token(request)
   if not token then return nil end
+  token = token:gsub("Bearer ",  "")
 
   jwks_url = conf.authorization_server .. "/" .. conf.api_version .. "/keys"
 
