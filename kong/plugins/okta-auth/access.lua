@@ -34,11 +34,11 @@ function _M.execute(request, conf)
 
   jwks_url = conf.authorization_server .. "/" .. conf.api_version .. "/keys"
 
-  println("Validating keys using " .. jwks_url)
+  print("Validating keys using " .. jwks_url)
 
   token_data, err = jwt.validate_with_jwks(token, jwks_url)
 
-  println("Error " .. err)
+  print("Error " .. err)
 
   if err then return nil end
 
