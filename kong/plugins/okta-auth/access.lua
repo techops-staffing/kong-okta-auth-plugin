@@ -33,7 +33,12 @@ function _M.execute(request, conf)
   if not token then return nil end
 
   jwks_url = conf.authorization_server .. "/" .. conf.api_version .. "/keys"
+
+  println("Validating keys using " .. jwks_url)
+
   token_data, err = jwt.validate_with_jwks(token, jwks_url)
+
+  println("Error " .. err)
 
   if err then return nil end
 
