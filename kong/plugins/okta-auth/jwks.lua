@@ -5,7 +5,7 @@ local cjson   = require "cjson"
 local b64 = require "mime".b64
 local unb64 = require "mime".unb64
 
-local _M = {}
+local M = {}
 
 local b64map = { ['-'] = '+', ['_'] = '/' };
 local function unb64url(s)
@@ -115,10 +115,13 @@ local function cache(key, kid)
   end
 
   file:close()
+
+  print("---------- CACHED KEY --------------------")
+  print(cached_key)
   return cached_key
 end
 
-function _M.to_pem(key, kid)
+function M.to_pem(key, kid)
   local key = cache(key, kid)
   local jwks = cjson.decode(key)
 
@@ -141,7 +144,9 @@ function _M.to_pem(key, kid)
 
   local encoded_key = encode_sequence_of_integer(der_key);
   local pem_key = der2pem(encoded_key,"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A","PUBLIC KEY")
+  print("---------- PEM KEY --------------------")
+  print(pem_key)
   return pem_key
 end
 
-return _M
+return M
