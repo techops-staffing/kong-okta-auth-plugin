@@ -39,9 +39,13 @@ function _M.execute(request, conf)
 
   token_data, err = jwt.validate_with_jwks(token, jwks_url)
 
-  print("Error " .. err)
+  if err == nil
+    print("Error - " .. err)
+    return nil
+  end
 
-  if err then return nil end
+  print("----- TOKEN DATA -----")
+  print(token_data)
 
   return is_token_valid(token_data), extract_data(token_data)
 end
