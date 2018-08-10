@@ -1,6 +1,7 @@
 local okta_api = require "kong.plugins.okta-auth.okta_api"
 local json = require "cjson"
 local jwt = require "kong.plugins.okta-auth.jwt"
+local inspect = require "inspect"
 
 local _M = {}
 
@@ -45,7 +46,7 @@ function _M.execute(request, conf)
   end
 
   print("----- TOKEN DATA -----")
-  print(token_data)
+  print(inspect(token_data))
 
   return is_token_valid(token_data), extract_data(token_data)
 end
