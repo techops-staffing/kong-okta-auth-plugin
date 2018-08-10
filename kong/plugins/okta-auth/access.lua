@@ -1,7 +1,6 @@
 local okta_api = require "kong.plugins.okta-auth.okta_api"
 local json = require "cjson"
 local jwt = require "kong.plugins.okta-auth.jwt"
-local inspect = require "inspect"
 
 local _M = {}
 
@@ -32,21 +31,15 @@ end
 function _M.execute(request, conf)
   local token = extract_token(request)
   if not token then return nil end
+
   token = token:gsub("Bearer ",  "")
-
   jwks_url = conf.authorization_server .. "/" .. conf.api_version .. "/keys"
-
-  print("Validating keys using " .. jwks_url)
-
   token_data, err = jwt.validate_with_jwks(token, jwks_url)
 
   if err ~= nil then
     print("Error - " .. err)
     return nil
   end
-
-  print("----- TOKEN DATA -----")
-  print(inspect(token_data))
 
   return is_token_valid(token_data), extract_data(token_data)
 end

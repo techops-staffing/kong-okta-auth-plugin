@@ -4,7 +4,7 @@
 local cjson   = require "cjson"
 local b64 = require "mime".b64
 local unb64 = require "mime".unb64
--- local kong_cache = require "kong.cache"
+local kong_cache = require "kong.cache"
 
 local M = {}
 
@@ -109,13 +109,7 @@ local function cache(key, kid)
 end
 
 function M.to_pem(key, kid)
-  --local key = cache(key, kid)
-  print("---------------------- FETCHING ------------")
-  local key = fetch_jwks(key)
-  print("---------------------- KEY -----------------")
-  print(key)
-  print("---------------------- KID -----------------")
-  print(kid)
+  local key = cache(key, kid)
   local jwks = cjson.decode(key)
 
   local algorithms = {
