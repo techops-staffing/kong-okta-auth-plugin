@@ -181,8 +181,8 @@ function M.validate_with_jwks(token, jwks_str)
 		return nil, error
 	end
 
-  -- local pem_key = jwks.to_pem(jwks_str, decoded_header.kid)
-	pem_key = ""
+  local pem_key = jwks.to_pem(jwks_str, decoded_header.kid)
+
   local valid_decoded_token, valid_decoded_header, err = M.decode(token, pem_key, true)
 
   return valid_decoded_token, err
