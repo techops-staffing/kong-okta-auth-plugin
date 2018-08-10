@@ -4,7 +4,7 @@
 local cjson   = require "cjson"
 local b64 = require "mime".b64
 local unb64 = require "mime".unb64
-local kong_cache = require "kong.tools.database_cache"
+-- local kong_cache = require "kong.tools.database_cache"
 
 local M = {}
 
