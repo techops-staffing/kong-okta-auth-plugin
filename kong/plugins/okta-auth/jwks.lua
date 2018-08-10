@@ -4,6 +4,7 @@
 local cjson   = require "cjson"
 local b64 = require "mime".b64
 local unb64 = require "mime".unb64
+local cache = require "kong.tools.database_cache"
 
 local M = {}
 
@@ -97,28 +98,14 @@ local function fetch_jwks(key_url)
 end
 
 local function cache(key, kid)
-  cached_key = nil
-  file = io.open(kid, "r")
+  local value = cache.get(kid)
 
-  if file ~= nil then
-    cached_key = file:read("*all")
-  else
-    file = io.open(kid, "w")
-    content = key
-
-    if is_url(key) then
-      content = fetch_jwks(key)
-    end
-
-    file:write(content)
-    cached_key = content
+  if value == nil then
+    value = fetch_jwks(key)
+    cache.set(kid, key)
   end
 
-  file:close()
-
-  print("---------- CACHED KEY --------------------")
-  print(cached_key)
-  return cached_key
+  return value
 end
 
 function M.to_pem(key, kid)
