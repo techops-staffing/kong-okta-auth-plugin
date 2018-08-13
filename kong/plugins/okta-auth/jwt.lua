@@ -1,7 +1,6 @@
 local cjson  = require 'cjson'
 local base64 = require 'base64'
 local crypto = require 'crypto'
-local inspect = require 'inspect'
 local jwks = require "kong.plugins.okta-auth.jwks"
 
 local function signRS (data, key, algo)
