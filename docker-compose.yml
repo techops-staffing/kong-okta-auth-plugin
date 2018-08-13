@@ -1,0 +1,10 @@
+version: '3'
+services:
+  lua:
+    build: .
+    environment:
+      - LUA_PATH="/okta-auth/?.lua;/okta-auth/?/init.lua;;"
+      - KONG_PATH="/kong"
+      - KONG_CUSTOM_PLUGINS="kong-plugin-okta-auth"
+    volumes:
+      - .:/okta-auth

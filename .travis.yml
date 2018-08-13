@@ -3,6 +3,7 @@ sudo: false
 
 env:
   - LUA="lua=5.1"
+  - LUA_PATH=$LUA_PATH;spec/fixtures/?.lua
 
 before_install:
   - pip install hererocks
@@ -11,12 +12,14 @@ before_install:
   - luarocks install kong
   - luarocks install busted
   - luarocks install lua-cjson
+  - luarocks install lbase64
+  - luarocks install luacrypto
 
 install:
-  - luarocks make
+  - make
 
 script:
-  - busted spec/okta-auth/access_spec.lua spec/okta-auth/handler_spec.lua spec/okta-auth/okta_api_spec.lua --verbose
+  - busted spec/unit/access_spec.lua spec/unit/handler_spec.lua spec/unit/okta_api_spec.lua spec/unit/jwt.lua --verbose
 
 notifications:
   email:
