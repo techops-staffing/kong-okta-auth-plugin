@@ -4,7 +4,9 @@
 local cjson   = require "cjson"
 local b64 = require "mime".b64
 local unb64 = require "mime".unb64
-local kong_cache = require "kong.cache"
+local singletons = require "kong.singletons"
+local inspect = require "inspect"
+-- local kong_cache = singletons.cache
 
 local M = {}
 
@@ -97,19 +99,15 @@ local function fetch_jwks(key_url)
   return https.request(key_url)
 end
 
-local function cache(key, kid)
-  local value = kong_cache.get(kid)
-
-  if value == nil then
-    value = fetch_jwks(key)
-    kong_cache.set(kid, key)
-  end
-
-  return value
+local function cache(key_url)
+  return [[
+{"keys":[{"alg":"RS256","e":"AQAB","n":"n5eMflAv9u5Lguj8FHPSlLnmMBG3XAtWhq3PbugGw2RrHVEfJ0oMIM6XAX9yaGC9y46wuk_optA8CgH5s7gmABfHATJKCJA6gA6Zv_ol1SObGFnDos9oVpj4Zi7XjVmb39UjRtJtS2S6Df-cr84-6HFOyQa_TTybqGv1sGq-kdk-pewISDfKS5k-ehGGok-3FKwKW0FLX8BZK6Edp95R7KXeH-WOIO1uXZTgnLVoaR34S9p0gqYQ-wEy3_PjK3dv09D2BgGlxl5NM5lcZaWn4Ehs8HvLcIPeAGGA1QcZg3AlgTeGeBVNtsozz4f2MzbGv-_EWEiU6FskrmTMhOH0JQ","kid":"Twfk2D3tYY-xo61vDoRnHdcnERqdQz-xR2zRHHja3Hk","kty":"RSA","use":"sig"},{"alg":"RS256","e":"AQAB","n":"zTsIHUnehKVJjFPu4c8hoLsy-PwANzGDeDPJN6W5wHwjUz_4yGz7_THbCOD5v2hKWYh02qWTqfCmvFaKykjif-6Ofsl1VCLR52pN2o53Sdhr0GFBTU1pWrxh7LyAH3hIqMmv2gWW_dwoF8s-LM3Mwz0bQJ_U3rzR0ToN6aTvbNogwS4cV1hlDMCMYaHXe7XFF9X-TY6Rk1BsJvg0wYtKEopCQIPVGlU8-4GjQHZdEhyGJacAx0WxwYnbIsRsyVgY_FNa91zeX7Ck3F2vB556dMLVpBN8pvi4ADWloDBDVJpYg39SH_roT1hbXDc3i_eBrC50deb0nttlqZWIlbTSeQ","kid":"DhQQVMtmiH9S-68kW0PLMpEJFXgj-zxXfPcRH622Xeg","kty":"RSA","use":"sig"}]}
+  ]]
+  -- return kong_cache:get(key_url, nil, fetch_jwks, key_url)
 end
 
-function M.to_pem(key, kid)
-  local key = cache(key, kid)
+function M.to_pem(key_url, kid)
+  local key = cache(key_url)
   local jwks = cjson.decode(key)
 
   local algorithms = {
@@ -131,8 +129,6 @@ function M.to_pem(key, kid)
 
   local encoded_key = encode_sequence_of_integer(der_key);
   local pem_key = der2pem(encoded_key,"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A","PUBLIC KEY")
-  print("---------- PEM KEY --------------------")
-  print(pem_key)
   return pem_key
 end
 

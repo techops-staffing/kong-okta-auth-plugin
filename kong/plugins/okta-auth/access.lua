@@ -1,5 +1,6 @@
 local okta_api = require "kong.plugins.okta-auth.okta_api"
 local json = require "cjson"
+local inspect = require "inspect"
 local jwt = require "kong.plugins.okta-auth.jwt"
 
 local _M = {}
@@ -11,10 +12,6 @@ local function extract_token(request)
   return string.match(authorization,
     '^[Bb]earer ([A-Za-z0-9-_]+%.[A-Za-z0-9-_]+%.[A-Za-z0-9-_]+)$'
   )
-end
-
-local function is_token_valid(token_data)
-  return token_data['active']
 end
 
 local function extract_data(token_data)
@@ -41,7 +38,7 @@ function _M.execute(request, conf)
     return nil
   end
 
-  return is_token_valid(token_data), extract_data(token_data)
+  return true, extract_data(token_data)
 end
 
 return _M

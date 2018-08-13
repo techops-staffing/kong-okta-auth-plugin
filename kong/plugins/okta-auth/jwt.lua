@@ -1,6 +1,7 @@
 local cjson  = require 'cjson'
 local base64 = require 'base64'
 local crypto = require 'crypto'
+local inspect = require 'inspect'
 local jwks = require "kong.plugins.okta-auth.jwks"
 
 local function signRS (data, key, algo)
@@ -171,7 +172,7 @@ function M.decode(data, key, verify)
 		end
 	end
 
-	return body, header
+	return body, header, nil
 end
 
 function M.validate_with_jwks(token, jwks_str)
