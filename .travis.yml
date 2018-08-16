@@ -7,7 +7,7 @@ env:
 
 before_install:
   - pip install hererocks
-  - hererocks env --$LUA --luarocks latest
+  - hererocks env --$LUA
   - source env/bin/activate
   - luarocks install kong
   - luarocks install busted
