@@ -70,18 +70,8 @@ describe("Access", function()
       assert.is_not_true(valid)
     end)
 
-    it("return false if token is not valid by introspection", function()
-      introspect_response = '{ "active": false }'
-      stub(jwt, "validate_with_jwks").returns(introspect_response)
-
-      valid = access.execute(request, conf)
-
-      assert.is_not_true(valid)
-    end)
-
     it("return true and introspect response if token is valid", function()
       introspect_response = {}
-      introspect_response['active'] = true
       introspect_response['exp'] = 1507397726
       introspect_response['scope'] = 'read write'
       introspect_response['username'] = 'user'

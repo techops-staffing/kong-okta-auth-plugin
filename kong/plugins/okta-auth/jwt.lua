@@ -176,9 +176,13 @@ function M.decode(data, key, verify)
 end
 
 local function get_pem(jwks_str, kid)
-	local value, err = singletons.cache:get("kid", nil, jwks.to_pem, jwks_str, kid)
+	local cache = singletons.cache
 
-	return value
+	if(cache == nil) then
+		return jwks.to_pem(jwks_str, kid)
+	end
+
+	return cache:get("kid", nil, jwks.to_pem, jwks_str, kid)
 end
 
 function M.validate_with_jwks(token, jwks_str)

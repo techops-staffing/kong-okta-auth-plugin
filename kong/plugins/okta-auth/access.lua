@@ -33,7 +33,6 @@ function _M.execute(request, conf)
   token_data, err = jwt.validate_with_jwks(token, jwks_url)
 
   if err ~= nil then
-    print("Error - " .. err)
     return nil
   end
 
