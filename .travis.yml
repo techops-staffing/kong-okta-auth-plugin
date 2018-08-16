@@ -3,7 +3,6 @@ sudo: false
 
 env:
   - LUA="lua=5.1"
-  - LUA_PATH=$LUA_PATH;spec/fixtures/?.lua
 
 before_install:
   - pip install hererocks
@@ -12,6 +11,9 @@ before_install:
   - luarocks install kong
   - luarocks install busted
   - luarocks install lua-cjson
+
+install:
+  - make
 
 script:
   - make test
