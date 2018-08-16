@@ -17,7 +17,7 @@ install:
   - make
 
 script:
-  - busted spec/unit/access_spec.lua spec/unit/handler_spec.lua spec/unit/okta_api_spec.lua --verbose
+  - make test
 
 notifications:
   email:
