@@ -7,14 +7,11 @@ env:
 
 before_install:
   - pip install hererocks
-  - hererocks env --$LUA
+  - hererocks env --$LUA -rlatest
   - source env/bin/activate
   - luarocks install kong
   - luarocks install busted
   - luarocks install lua-cjson
-
-install:
-  - make
 
 script:
   - make test
