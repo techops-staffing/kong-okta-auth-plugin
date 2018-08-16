@@ -1,9 +1,6 @@
-BUSTED_ARGS ?= -v
-TEST_CMD ?= busted $(BUSTED_ARGS)
+TEST_CMD ?= busted -v
 KONG_PATH ?=./kong
 PLUGIN_NAME := kong-plugin-okta-auth
-
-.PHONY: install uninstall dev test test-integration test-plugins test-all clean
 
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(dir $(mkfile_path))
