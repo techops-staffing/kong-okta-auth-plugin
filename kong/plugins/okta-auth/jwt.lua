@@ -3,6 +3,7 @@ local base64 = require 'base64'
 local crypto = require 'crypto'
 local jwks = require "kong.plugins.okta-auth.jwks"
 local singletons = require "kong.singletons"
+local inspect = require "inspect"
 
 local function signRS (data, key, algo)
 	local privkey = crypto.pkey.from_pem(key, true)
@@ -185,14 +186,14 @@ local function get_pem(jwks_str, kid)
 	return cache:get("kid", nil, jwks.to_pem, jwks_str, kid)
 end
 
-function M.validate_with_jwks(token, jwks_str)
+function M.validate_with_jwks(token, jwks_url)
   local decoded_token, decoded_header, error = M.decode(token)
 
 	if(error ~= nil) then
 		return nil, error
 	end
 
-  local pem_key = get_pem(jwks_str, decoded_header.kid)
+  local pem_key = get_pem(jwks_url, decoded_header.kid)
 
   local valid_decoded_token, valid_decoded_header, err = M.decode(token, pem_key, true)
 

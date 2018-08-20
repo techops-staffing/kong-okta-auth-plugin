@@ -4,6 +4,7 @@
 local cjson   = require "cjson"
 local b64 = require "mime".b64
 local unb64 = require "mime".unb64
+local inspect = require "inspect"
 
 local M = {}
 
@@ -119,6 +120,9 @@ function M.to_pem(key_url, kid)
 
   local encoded_key = encode_sequence_of_integer(der_key);
   local pem_key = der2pem(encoded_key,"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A","PUBLIC KEY")
+
+  print(inspect(pem_key))
+
   return pem_key
 end
 

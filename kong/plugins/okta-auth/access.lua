@@ -8,9 +8,13 @@ local function extract_token(request)
   local authorization = request.get_headers()["authorization"]
   if not authorization then return nil end
 
-  return string.match(authorization,
+  local token = string.match(authorization,
     '^[Bb]earer ([A-Za-z0-9-_]+%.[A-Za-z0-9-_]+%.[A-Za-z0-9-_]+)$'
   )
+
+  if not token then return nil end
+
+  return token:gsub("Bearer ",  "")
 end
 
 local function extract_data(token_data)
@@ -28,7 +32,6 @@ function _M.execute(request, conf)
   local token = extract_token(request)
   if not token then return nil end
 
-  token = token:gsub("Bearer ",  "")
   jwks_url = conf.authorization_server .. "/" .. conf.api_version .. "/keys"
   token_data, err = jwt.validate_with_jwks(token, jwks_url)
 
