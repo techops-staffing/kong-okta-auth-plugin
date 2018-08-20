@@ -1,4 +1,4 @@
-local helpers = require "spec.helpers"
+local helpers = require "helpers"
 local cjson = require "cjson"
 
 describe("Okta Auth", function()
@@ -8,7 +8,6 @@ describe("Okta Auth", function()
   local api
 
   setup(function()
-    helpers.run_migrations()
 
     api = assert(helpers.dao.apis:insert {
       name = "api",
