@@ -1,2 +1,4 @@
 env/
 lua_modules/
+
+.env

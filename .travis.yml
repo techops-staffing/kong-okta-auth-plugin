@@ -1,6 +1,9 @@
 language: python
 sudo: false
 
+services:
+  - docker
+
 env:
   - LUA="lua=5.1"
 
@@ -19,6 +22,8 @@ install:
 
 script:
   - make test
+  - make build
+  - make integration-test
 
 notifications:
   email:

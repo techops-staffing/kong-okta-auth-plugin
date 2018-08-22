@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   lua:
     build: .
@@ -33,6 +33,13 @@ services:
       - KONG_ADMIN_ERROR_LOG=/dev/stderr
       - KONG_CUSTOM_PLUGINS=okta-auth,zipkin
       - KONG_ADMIN_LISTEN=0.0.0.0:8001
+      - OKTA_BASE_URL
+      - OKTA_CLIENT_ID
+      - OKTA_CLIENT_SECRET
+      - OKTA_AUTH_SERVER_ID
+      - OKTA_UNKOWN_AUTH_SERVER_ID
+      - OKTA_BASIC_TOKEN
+      - EXPIRED_TOKEN
     ports:
       - 8000:8000
       - 8001:8001

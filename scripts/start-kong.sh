@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 source color.sh
+source /etc/profile.d/rvm.sh
 
 bold "Waiting for SQL connection to be available..."
 /usr/local/bin/wait-for.sh $KONG_PG_HOST:5432
