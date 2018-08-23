@@ -26,9 +26,11 @@ test: install-dev
 	$(call set_env) \
 	$(TEST_CMD) $(current_dir)spec/unit
 
-test-integration: install-dev
-	$(call set_env) \
-	$(TEST_CMD) $(current_dir)spec/integration
+build:
+	docker-compose build apigw
+
+integration-test:
+	docker-compose run -w /integration apigw rspec
 
 clean:
 	@echo "removing $(PLUGIN_NAME)"
