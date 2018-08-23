@@ -11,6 +11,7 @@ description = {
 }
 
 dependencies = {
+  "lua ~> 5.1"
 }
 
 local pluginName = "okta-auth"
@@ -21,5 +22,7 @@ build = {
     ["kong.plugins."..pluginName..".access"] = "kong/plugins/"..pluginName.."/access.lua",
     ["kong.plugins."..pluginName..".schema"] = "kong/plugins/"..pluginName.."/schema.lua",
     ["kong.plugins."..pluginName..".okta_api"] = "kong/plugins/"..pluginName.."/okta_api.lua",
+    ["kong.plugins."..pluginName..".jwt"] = "kong/plugins/"..pluginName.."/jwt.lua",
+    ["kong.plugins."..pluginName..".jwks"] = "kong/plugins/"..pluginName.."/jwks.lua"
   }
 }

@@ -64,3 +64,35 @@ form parameter|required|description
 `check_auth_server` | *optional* | If *true* check authorization server availability (default: `true`)
 
 
+## Running Tests
+
+In order to run tests, it is recommneded using [Hererocks](https://github.com/mpeterv/hererocks).
+
+Setting up Hererocks
+```
+pip install hererocks
+LUA="lua=5.1"
+hererocks env --$LUA -rlatest
+source ./env/bin activate
+```
+
+Installing dependencies
+```
+luarocks install busted
+luarocks install kong
+luarocks install lua-cjson
+luarocks install luasec OPENSSL_DIR=/usr/local/opt/openssl (you may need to run `brew install openssl` and `brew link --force openssl` on MacOS)
+```
+
+You also will need to clone [Kong](https://github.com/Kong/kong) and set the value of `KONG_PATH`.
+
+Running tests
+```
+make test
+```
+
+### Using Docker
+```
+docker-compose build lua
+docker-compose run lua make test
+```
