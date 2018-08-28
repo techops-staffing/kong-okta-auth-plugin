@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/techops-staffing/kong-okta-auth-plugin.svg?branch=master)](https://travis-ci.org/techops-staffing/kong-okta-auth-plugin)
 
-Kong Plugin to validate OAuth 2.0 access tokens against an OKTA Authorization Server. The validation is made using [OKTA's introspection endpoint](https://developer.okta.com/docs/api/resources/oauth2.html#introspection-request).
+Kong Plugin to validate OAuth 2.0 access tokens against an OKTA Authorization Server.
 
 When enabled, this plugin will validate the token and add new headers to requests based on the data in the provided JWT token. The generated headers follow the naming convention of OKTA-\<field-name\>.
 
-The headers *OKTA-Group*, *OKTA-Scope* and *OKTA-Username* will be included with requests to APIs.
+The headers *OKTA-Group*, *OKTA-Scope* and *OKTA-Username* will be included with requests to APIs. All preexisting headers prefixed by *OKTA* and *Authorization* header will be stripped from the request.
 
 ### Example
 
