@@ -73,14 +73,16 @@ describe("Access", function()
     it("return true and introspect response if token is valid", function()
       introspect_response = {}
       introspect_response['exp'] = 1507397726
-      introspect_response['scope'] = 'read write'
-      introspect_response['username'] = 'user'
-      introspect_response['group'] = {'Everyone'}
+      introspect_response['scp'] = 'read write'
+      introspect_response['cid'] = 'user'
+      introspect_response['sub'] = 'user'
+      introspect_response['groups'] = {'Everyone'}
 
       expected_token_data = {
-        ["scope"] = "read write",
-        ["username"] = "user",
-        ["group"] = {"Everyone"}
+        ["scp"] = "read write",
+        ["cid"] = "user",
+        ["sub"] = "user",
+        ["groups"] = {"Everyone"}
       }
 
       stub(jwt, "validate_with_jwks").returns(introspect_response)
