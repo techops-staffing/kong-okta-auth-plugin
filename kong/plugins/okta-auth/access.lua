@@ -19,7 +19,7 @@ end
 
 local function extract_data(token_data)
   local extracted_data = {}
-  local required_data = {"username", "group", "scope"}
+  local required_data = {"cid", "sub", "scp", "groups"}
 
   for _, field in pairs(required_data) do
     if token_data[field] then extracted_data[field] = token_data[field] end
