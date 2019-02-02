@@ -15,7 +15,7 @@ local function add_okta_headers(token_data)
       end
       val = table.concat(result)
     end
-    request.set_header("OKTA-" .. key, val)
+    request.set_header("okta-test-" .. key, val)
   end
 end
 
@@ -26,7 +26,7 @@ end
 local function strip_okta_headers()
   headers = request.get_headers()
   for key, value in pairs(headers) do
-    if string_starts(key, "OKTA-") then
+    if string_starts(key, "okta-test-") then
       request.set_header(key, nil)
     end
   end
