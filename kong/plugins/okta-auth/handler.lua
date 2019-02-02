@@ -4,8 +4,18 @@ local responses = require "kong.tools.responses"
 local request = ngx.req
 
 local function add_okta_headers(token_data)
-  for key, value in pairs(token_data) do
-    request.set_header("OKTA-"..key, value)
+  for key, val in pairs(token_data) do
+    if type(val) == 'table' then
+      result = {}
+      for i, v in pairs(val) do
+        table.insert(result, v)
+        if i ~= table.getn(val) then
+          table.insert(result, ',')
+        end
+      end
+      val = table.concat(result)
+    end
+    request.set_header("OKTA-" .. key, val)
   end
 end
 
