@@ -2,7 +2,6 @@ local https = require "ssl.https"
 local ltn12 = require "ltn12"
 local mime = require "mime"
 local singletons = require "kong.singletons"
-local logger = require 'kong.plugins.okta-auth.log'
 
 local _M = {}
 
@@ -59,7 +58,7 @@ local function fetch_objc_label(oidc_id)
     )
 
     if status_code ~= 200 or not response_body then
-        logger.err("Assemble OIDC Label failed with :status_code ", status_code)
+        ngx.log(ngx.ERR, "Assemble OIDC Label failed with :status_code ", status_code)
         return nil
     end
 
@@ -68,7 +67,7 @@ local function fetch_objc_label(oidc_id)
 end
 
 function _M.get_oidc_label(oidc_id)
-    logger.info("Get OIDC label.")
+    ngx.log(ngx.INFO, "Get OIDC label.")
 
     local cache = singletons.cache
     local oidc_label
@@ -82,7 +81,7 @@ function _M.get_oidc_label(oidc_id)
         end
 
         if err then
-            logger.err("Cache OIDC label by it's id failed.", err)
+            ngx.log(ngx.ERR, "Cache OIDC label by it's id failed.", err)
             oidc_label = nil
         end
     end
