@@ -28,6 +28,22 @@ local function extract_data(token_data)
   return extracted_data
 end
 
+local function make_oidc(token_data)
+  kong.log.info()("Make Oidc")
+
+  local oidc = extract_data(token_data)
+  local oidc_label = okta_api.get_oidc_label(oidc.cid)
+
+  if oidc_label then
+    kong.log.debug(" Complete Oidc label Success.")
+    oidc['Lab'] = oidc_label
+  else
+    kong.log.err(" Complete Oidc label failed.")
+  end
+
+  return oidc
+end
+
 function _M.execute(request, conf)
   local token = extract_token(request)
   if not token then return nil end
@@ -39,7 +55,7 @@ function _M.execute(request, conf)
     return nil
   end
 
-  return true, extract_data(token_data)
+  return true, make_oidc(token_data)
 end
 
 return _M
