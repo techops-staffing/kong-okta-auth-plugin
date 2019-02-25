@@ -30,7 +30,7 @@ local function extract_data(token_data)
 end
 
 local function make_oidc(token_data)
-  kong.log.info()("Make Oidc")
+  kong.log.info("Make Oidc")
 
   local oidc = extract_data(token_data)
   local oidc_label = okta_api.get_oidc_label(oidc.cid)
