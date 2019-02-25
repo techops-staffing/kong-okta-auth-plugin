@@ -1,7 +1,7 @@
 local okta_api = require "kong.plugins.okta-auth.okta_api"
 local json = require "cjson"
 local jwt = require "kong.plugins.okta-auth.jwt"
-local kong = require 'kong'
+local logger = require 'kong.plugins.okta-auth.log'
 
 local _M = {}
 
@@ -30,16 +30,16 @@ local function extract_data(token_data)
 end
 
 local function make_oidc(token_data)
-  kong.log.info("Make Oidc")
+  logger.info("Make Oidc")
 
   local oidc = extract_data(token_data)
   local oidc_label = okta_api.get_oidc_label(oidc.cid)
 
   if oidc_label then
-    kong.log.debug(" Complete Oidc label Success.")
+    logger.debug(" Complete Oidc label Success.")
     oidc['Lab'] = oidc_label
   else
-    kong.log.err(" Complete Oidc label failed.")
+    logger.err(" Complete Oidc label failed.")
   end
 
   return oidc

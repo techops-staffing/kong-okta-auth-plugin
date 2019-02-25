@@ -2,7 +2,7 @@ local https = require "ssl.https"
 local ltn12 = require "ltn12"
 local mime = require "mime"
 local singletons = require "kong.singletons"
-local kong = require 'kong'
+local logger = require 'kong.plugins.okta-auth.log'
 
 local _M = {}
 
@@ -59,7 +59,7 @@ local function fetch_objc_label(oidc_id)
     )
 
     if status_code ~= 200 or not response_body then
-        kong.log.err("Assemble OIDC Label failed with :status_code ", status_code)
+        logger.err("Assemble OIDC Label failed with :status_code ", status_code)
         return nil
     end
 
@@ -68,7 +68,7 @@ local function fetch_objc_label(oidc_id)
 end
 
 function _M.get_oidc_label(oidc_id)
-    kong.log.info("Get OIDC label.")
+    logger.info("Get OIDC label.")
 
     local cache = singletons.cache
     local oidc_label
@@ -82,7 +82,7 @@ function _M.get_oidc_label(oidc_id)
         end
 
         if err then
-            kong.log.err("Cache OIDC label by it's id failed.", err)
+            logger.err("Cache OIDC label by it's id failed.", err)
             oidc_label = nil
         end
     end
