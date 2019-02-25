@@ -1,6 +1,7 @@
 local okta_api = require "kong.plugins.okta-auth.okta_api"
 local json = require "cjson"
 local jwt = require "kong.plugins.okta-auth.jwt"
+local kong = require 'kong'
 
 local _M = {}
 

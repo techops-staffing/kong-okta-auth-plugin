@@ -2,6 +2,7 @@ local https = require "ssl.https"
 local ltn12 = require "ltn12"
 local mime = require "mime"
 local singletons = require "kong.singletons"
+local kong = require 'kong'
 
 local _M = {}
 
