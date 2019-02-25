@@ -32,13 +32,13 @@ local function make_oidc(token_data)
   ngx.log(ngx.INFO, "Make Oidc")
 
   local oidc = extract_data(token_data)
-  local oidc_label = okta_api.get_oidc_label(oidc.cid)
+  local oidc_label = okta_api.get_oidc_label(oidc["cid"])
 
   if oidc_label then
-    ngx.log(ngx.DEBUG, " Complete Oidc label Success.")
-    oidc['Lab'] = oidc_label
+    ngx.log(ngx.DEBUG, " Get Oidc label Success.")
+    oidc["Lab"] = oidc_label
   else
-    ngx.log(ngx.ERR, " Complete Oidc label failed.")
+    ngx.log(ngx.ERR, " Get Oidc label failed.")
   end
 
   return oidc

@@ -51,6 +51,8 @@ local function get_Oidc_headers()
 end
 
 local function fetch_objc_label(oidc_id)
+    ngx.log(ngx.INFO, "fetch_objc_label :oidc id ", oidc_id)
+
     local url = os.getenv('OKTA_BASE_URL') .. '/api/v1/apps/' .. oidc_id
     local headers = get_Oidc_headers()
     local status_code, response_body, response_headers = send_request(
@@ -67,7 +69,7 @@ local function fetch_objc_label(oidc_id)
 end
 
 function _M.get_oidc_label(oidc_id)
-    ngx.log(ngx.INFO, "Get OIDC label.")
+    ngx.log(ngx.INFO, "Get OIDC label by oidc id: ", oidc_id)
 
     local cache = singletons.cache
     local oidc_label
@@ -81,7 +83,7 @@ function _M.get_oidc_label(oidc_id)
         end
 
         if err then
-            ngx.log(ngx.ERR, "Cache OIDC label by it's id failed.", err)
+            ngx.log(ngx.ERR, "Cache OIDC label by it's id failed: ", err)
             oidc_label = nil
         end
     end
