@@ -37,7 +37,7 @@ local OktaAuth = BasePlugin:extend()
 OktaAuth.PRIORITY = 1000
 
 function OktaAuth:init_worker()
-  OktaAuth.super.new(self, "okta-auth")
+  OktaAuth.super.init_worker(self, "okta-auth")
   --constant.load_env_when_nginx_worker_init()
 end
 
