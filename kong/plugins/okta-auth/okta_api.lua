@@ -71,10 +71,12 @@ local function fetch_objc_label(oidc_id)
     end
 
     if type(response_body) == "table" then
-        for key, value in pairs(response_body) do
-            ngx.log(ngx.DEBUG, key, value)
+        for _, value in pairs(response_body) do
+            ngx.log(ngx.DEBUG, value)
         end
-        return response_body.label
+
+        local resp = response_body[1] or response_body
+        return resp["label"]
     else
         ngx.log(ngx.ERR, "Get Response Failed with wrong formatted")
         return nil
