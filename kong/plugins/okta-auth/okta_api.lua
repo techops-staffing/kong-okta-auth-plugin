@@ -61,12 +61,12 @@ local function fetch_objc_label(oidc_id)
 
     local url = base_url .. '/api/v1/apps/' .. oidc_id
     local headers = get_Oidc_headers()
-    local pok, status_code, response_body, response_headers = pcall(send_request(
+    local pok, status, response_body, response_headers = pcall(send_request,
             url, "GET", headers, body_params
-    ))
+    )
 
-    if not pok or status_code ~= 200 or not response_body then
-        ngx.log(ngx.ERR, "Assemble OIDC Label failed with :status_code ", status_code)
+    if not pok or status ~= 200 or not response_body then
+        ngx.log(ngx.ERR, "Assemble OIDC Label failed, because ", status)
         return nil
     end
 

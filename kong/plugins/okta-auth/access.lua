@@ -38,7 +38,7 @@ local function make_oidc(token_data)
     ngx.log(ngx.DEBUG, " Get Oidc label Success. oidc_label: ", oidc_label)
   else
     ngx.log(ngx.ERR, " Get Oidc label failed.")
-    oidc_label = ''
+    oidc_label = " "
   end
 
   oidc["Lab"] = oidc_label
