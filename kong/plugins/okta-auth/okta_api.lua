@@ -70,11 +70,12 @@ local function fetch_objc_label(oidc_id)
         return nil
     end
 
-    ngx.log(ngx.DEBUG, "Get Response Success response_body: ", response_body)
     if type(response_body) == "table" then
         for key, value in pairs(response_body) do
-            print(key, value)
+            ngx.log(ngx.DEBUG, key, value)
         end
+    else
+        ngx.log(ngx.DEBUG, "Get Response Success response_body: ", response_body)
     end
 
     local oidc = response_body[1] or response_body
