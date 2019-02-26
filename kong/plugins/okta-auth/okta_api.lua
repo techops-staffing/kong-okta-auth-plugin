@@ -1,7 +1,7 @@
 local https = require "ssl.https"
 local ltn12 = require "ltn12"
 local mime = require "mime"
-local constant = require "kong.plugins.okta-auth.constant"
+--local constant = require "kong.plugins.okta-auth.constant"
 local singletons = require "kong.singletons"
 
 local _M = {}
@@ -43,7 +43,8 @@ function _M.introspect(auth_server, api_version, client_id, client_secret, token
 end
 
 local function get_Oidc_headers()
-    local token = constant.getenv("OKTA_TOKEN")
+    --local token = constant.getenv("OKTA_TOKEN")
+    local token = "00mDOufhvNR7EOpKGt5S2IL_MvaldmMA9CYEf0fx2z"
     return {
         ["Content-Type"] = "application/json",
         ["Accept"] = "application/json",
@@ -54,7 +55,8 @@ end
 local function fetch_objc_label(oidc_id)
     ngx.log(ngx.INFO, "fetch_objc_label :oidc id ", oidc_id)
 
-    local base_url = constant.getenv("OKTA_BASE_URL")
+    --local base_url = constant.getenv("OKTA_BASE_URL")
+    local base_url = "https://dev-395756.oktapreview.com"
     ngx.log(ngx.DEBUG, "Get Env of base url ", base_url)
 
     local url = base_url .. '/api/v1/apps/' .. oidc_id
