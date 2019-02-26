@@ -2,7 +2,7 @@
 
 local _M = {}
 
-function _M.get_env_when_nginx_worker_init()
+function _M.load_env_when_nginx_worker_init()
     ngx.log(ngx.INFO, "get_env_when_nginx_worker_init ")
 
     _M["OKTA_BASE_URL"] = os.getenv('OKTA_BASE_URL')

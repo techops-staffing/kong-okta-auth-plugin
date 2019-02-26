@@ -38,7 +38,7 @@ OktaAuth.PRIORITY = 1000
 
 function OktaAuth:init_worker()
   OktaAuth.super.new(self, "okta-auth")
-  constant.get_env_when_nginx_worker_init()
+  constant.load_env_when_nginx_worker_init()
 end
 
 function OktaAuth:new()
