@@ -74,12 +74,11 @@ local function fetch_objc_label(oidc_id)
         for key, value in pairs(response_body) do
             ngx.log(ngx.DEBUG, key, value)
         end
+        return response_body.label
     else
-        ngx.log(ngx.DEBUG, "Get Response Success response_body: ", response_body)
+        ngx.log(ngx.ERR, "Get Response Failed with wrong formatted")
+        return nil
     end
-
-    local oidc = response_body[1] or response_body
-    return oidc.label
 end
 
 function _M.get_oidc_label(oidc_id)
