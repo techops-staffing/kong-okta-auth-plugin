@@ -53,13 +53,16 @@ end
 local function fetch_objc_label(oidc_id)
     ngx.log(ngx.INFO, "fetch_objc_label :oidc id ", oidc_id)
 
-    local url = os.getenv('OKTA_BASE_URL') .. '/api/v1/apps/' .. oidc_id
-    local headers = get_Oidc_headers()
-    local status_code, response_body, response_headers = send_request(
-            url, "GET", headers, body_params
-    )
+    local base_url = os.getenv('OKTA_BASE_URL')
+    ngx.log(ngx.DEBUG, "Get Env of base url ", base_url)
 
-    if status_code ~= 200 or not response_body then
+    local url = base_url .. '/api/v1/apps/' .. oidc_id
+    local headers = get_Oidc_headers()
+    local pok, status_code, response_body, response_headers = pcall(send_request(
+            url, "GET", headers, body_params
+    ))
+
+    if not pok or status_code ~= 200 or not response_body then
         ngx.log(ngx.ERR, "Assemble OIDC Label failed with :status_code ", status_code)
         return nil
     end
