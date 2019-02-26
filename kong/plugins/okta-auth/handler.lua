@@ -1,6 +1,7 @@
 local BasePlugin = require "kong.plugins.base_plugin"
 local access = require "kong.plugins.okta-auth.access"
 local responses = require "kong.tools.responses"
+local constant = require "kong.plugins.okta-auth.constant"
 local request = ngx.req
 
 local function add_okta_headers(token_data)
@@ -34,6 +35,11 @@ end
 
 local OktaAuth = BasePlugin:extend()
 OktaAuth.PRIORITY = 1000
+
+function OktaAuth:init_worker()
+  OktaAuth.super.new(self, "okta-auth")
+  constant.get_env_when_nginx_worker_init()
+end
 
 function OktaAuth:new()
   OktaAuth.super.new(self, "okta-auth")
