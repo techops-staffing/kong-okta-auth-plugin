@@ -1,6 +1,7 @@
 local https = require "ssl.https"
 local ltn12 = require "ltn12"
 local mime = require "mime"
+local json = require('cjson')
 --local constant = require "kong.plugins.okta-auth.constant"
 local singletons = require "kong.singletons"
 
@@ -76,7 +77,8 @@ local function fetch_objc_label(oidc_id)
         end
 
         local resp = response_body[1] or response_body
-        return resp["label"]
+        local tab = json.decode(resp)
+        return tab["label"]
     else
         ngx.log(ngx.ERR, "Get Response Failed with wrong formatted")
         return nil
