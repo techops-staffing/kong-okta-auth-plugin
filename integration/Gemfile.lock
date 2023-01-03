@@ -4,10 +4,12 @@ GEM
     diff-lcs (1.3)
     dotenv (2.2.1)
     excon (0.62.0)
-    httparty (0.16.2)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     kong (0.3.2)
       excon
+    mini_mime (1.1.2)
     multi_xml (0.6.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
